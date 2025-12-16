@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle, Award, Star } from "lucide-react"
@@ -8,7 +8,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useUserProgress } from "@/hooks/use-user-progress"
 
-export default function LessonCompletePage() {
+function LessonCompleteContent() {
   const searchParams = useSearchParams()
   const lessonId = searchParams.get("lessonId")
   const lang = searchParams.get("lang")
@@ -53,5 +53,13 @@ export default function LessonCompletePage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function LessonCompletePage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <LessonCompleteContent />
+    </Suspense>
   )
 } 

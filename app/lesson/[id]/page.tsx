@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -22,7 +22,7 @@ interface LessonStep {
   hint?: string
 }
 
-export default function LessonPage() {
+function LessonContent() {
   const params = useParams()
   const searchParams = useSearchParams()
 
@@ -261,5 +261,13 @@ export default function LessonPage() {
         </Card>
       </main>
     </div>
+  )
+}
+
+export default function LessonPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <LessonContent />
+    </Suspense>
   )
 }
